@@ -35,7 +35,8 @@ const lower = cleanCommand.toLowerCase();
 
 if (
   lower.includes("who created you") ||
-  lower.includes("who made you")
+  lower.includes("who made you")||
+   lower.includes("tane kone banayu") 
 ) {
   return {
     type: "general",
@@ -46,17 +47,34 @@ if (
 
 if (
   lower.includes("what is your name") ||
+  lower.includes("what is this") ||
   lower.includes("who are you")
 ) {
   return {
     type: "general",
     userInput: cleanCommand,
-    response: `I am ${assistantName}, your AI assistant.`,
+    response: `I am ${assistantName},Ai assistant created by ${userName}.`
+  ,
   };
 }
+  if (
+     lower.includes("hello") ||
+  lower.includes("hi") ||
+  lower.includes("hey") ||
+  lower.includes("how are you") ||
+  lower.includes("what's up")
+) {
+  return {
+    type: "general",
+    userInput: cleanCommand,
+    response: `Hello ${userName}! How can I help you today?`,
+  };
+}
+
 if (
   lower.includes("what time is it") ||
   lower.includes("current time") ||
+  lower.includes("what is time") ||
   lower.includes("time now")
 ) {
   const now = new Date();

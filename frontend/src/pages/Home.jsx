@@ -165,7 +165,8 @@ const handleCommand = (data) => {
       console.log("Navigating to:", url);
 
       setTimeout(() => {
-        window.location.href = url;
+        //window.location.href = url;
+         window.open(url, "_blank");
       }, 1000);
     };
 
