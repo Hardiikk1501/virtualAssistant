@@ -7,7 +7,7 @@ export const UserDataContext = createContext();
 
 function UserContext({ children }) {
 
-  const serverUrl = "http://localhost:3000";
+  const serverUrl = "https://virtualassistant-kdfm.onrender.com";
 
   const [userData, setUserData] = useState(null);
   const [frontendImage, setFrontendImage] = useState(null);
