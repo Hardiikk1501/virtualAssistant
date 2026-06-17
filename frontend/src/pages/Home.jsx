@@ -136,7 +136,7 @@ const speak = (text) => {
   );
 };
 
-//handle command  testing 
+
 
 const handleCommand = (data) => {
   try {

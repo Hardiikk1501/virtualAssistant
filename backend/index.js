@@ -24,17 +24,6 @@ app.use(cookiesParser());
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 
-// For testing the gemini response
-
-// app.get("/",async (req, res) => {
-
-//       let prompt =req.query.prompt;
-//       let data=await geminiResponse(prompt);
-//       res.json(data);
-
-// });
-
-
 app.listen(PORT, () => {
     connectDB();
   console.log(`Server running on port http://localhost:${PORT}`);
