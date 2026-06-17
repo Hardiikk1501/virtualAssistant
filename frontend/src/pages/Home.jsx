@@ -7,15 +7,12 @@ import React, {
 } from "react";
 import axios from "axios";
 import { UserDataContext } from "../context/UserContext";
-
 import { useNavigate } from "react-router-dom";
-
 import {
   FaRobot,
   FaSignOutAlt,
   FaMagic,
 } from "react-icons/fa";
-
 
 function Home() {
 
@@ -197,9 +194,9 @@ const speak = (text) => {
 //       // Google Search
 //       google_search: () => {
 //         speak(`Searching ${userInput} on Google`);
-//         window.location.href(
+//         window.location.href=
 //           `https://www.google.com/search?q=${query}`
-//         );
+      
 //       },
 
 //       // YouTube Search
@@ -230,7 +227,7 @@ const speak = (text) => {
 //   console.log("Window:", win);
 
 //   speak(
-//     `opening ${userInput} on YouTube`
+//     `opening ${userInput}`
 //   );
 // },
 //       // Open Website
@@ -348,99 +345,180 @@ const speak = (text) => {
 
 const handleCommand = (data) => {
   try {
-    if (!data?.type) {
+    if (!data || !data.type) {
+      console.warn("Invalid command data:", data);
       speak("Invalid command received");
       return;
     }
 
-    const { type, userInput = "", response = "" } = data;
+    const {
+      type,
+      userInput = "",
+      response = "",
+    } = data;
 
+    const cleanType = type.trim().toLowerCase();
     const query = encodeURIComponent(userInput);
 
-    const commands = {
-      "google-search": () =>
-        window.open(
-          `https://www.google.com/search?q=${query}`,
-          "_blank"
-        ),
+    console.log("Command Type:", cleanType);
+    console.log("Command Input:", userInput);
+    console.log("Command Response:", response);
 
-      "youtube-search": () =>
-        window.open(
-          `https://www.youtube.com/results?search_query=${query}`,
-          "_blank"
-        ),
-
-      "youtube-play": () =>
-        window.open(
-          `https://www.youtube.com/results?search_query=${query}`,
-          "_blank"
-        ),
-
-      "calculator-open": () =>
-        window.open(
-          "https://www.google.com/search?q=calculator",
-          "_blank"
-        ),
-
-      "instagram-open": () =>
-        window.open(
-          "https://www.instagram.com/",
-          "_blank"
-        ),
-
-      "facebook-open": () =>
-        window.open(
-          "https://www.facebook.com/",
-          "_blank"
-        ),
-
-      "whatsapp-open": () =>
-        window.open(
-          "https://web.whatsapp.com/",
-          "_blank"
-        ),
-
-      "github-open": () =>
-        window.open(
-          "https://github.com/",
-          "_blank"
-        ),
-
-      "weather-show": () =>
-        window.open(
-          "https://www.google.com/search?q=weather",
-          "_blank"
-        ),
-
-      "maps-open": () =>
-        window.open(
-          `https://www.google.com/maps/search/${query}`,
-          "_blank"
-        ),
-
-      "news-search": () =>
-        window.open(
-          `https://news.google.com/search?q=${query}`,
-          "_blank"
-        ),
-
-      "music-play": () =>
-        window.open(
-          `https://open.spotify.com/search/${query}`,
-          "_blank"
-        ),
+    // Open URL Helper
+    const openWebsite = (url) => {
+      console.log("Opening URL:", url);
+      window.location.href = url;
     };
 
-    speak(response);
+    const commands = {
+      // General Conversation
+      general: () => speak(response),
+      conversation: () => speak(response),
+      general_conversation: () => speak(response),
 
-    if (commands[type]) {
-      commands[type]();
+      // Google Search
+      google_search: () => {
+        speak(`Searching ${userInput} on Google`);
+        openWebsite(
+          `https://www.google.com/search?q=${query}`
+        );
+      },
+
+      // YouTube Search
+      youtube_search: () => {
+        speak(`Searching ${userInput} on YouTube`);
+        openWebsite(
+          `https://www.youtube.com/results?search_query=${query}`
+        );
+      },
+
+      // WhatsApp
+      whatsapp_open: () => {
+        speak("Opening WhatsApp");
+        openWebsite("https://web.whatsapp.com/");
+      },
+
+      open_whatsapp: () => {
+        speak("Opening WhatsApp");
+        openWebsite("https://web.whatsapp.com/");
+      },
+
+      // Instagram
+      instagram_open: () => {
+        speak("Opening Instagram");
+        openWebsite("https://www.instagram.com/");
+      },
+
+      open_instagram: () => {
+        speak("Opening Instagram");
+        openWebsite("https://www.instagram.com/");
+      },
+
+      // GitHub
+      github_open: () => {
+        speak("Opening GitHub");
+        openWebsite("https://github.com/");
+      },
+
+      open_github: () => {
+        speak("Opening GitHub");
+        openWebsite("https://github.com/");
+      },
+
+      // Open Website
+      open_website: () => {
+        let website = userInput
+          .replace(/^open\s+/i, "")
+          .trim()
+          .toLowerCase();
+
+        website = website.replace(/\s+/g, "");
+
+        if (
+          !website.startsWith("http") &&
+          !website.includes(".")
+        ) {
+          website += ".com";
+        }
+
+        const url = website.startsWith("http")
+          ? website
+          : `https://${website}`;
+
+        speak(`Opening ${website}`);
+        openWebsite(url);
+      },
+
+      // Spotify Music
+      play_music: () => {
+        speak(`Playing ${userInput}`);
+        openWebsite(
+          `https://open.spotify.com/search/${query}`
+        );
+      },
+
+      // Maps
+      open_maps: () => {
+        speak(`Opening maps for ${userInput}`);
+        openWebsite(
+          `https://www.google.com/maps/search/${query}`
+        );
+      },
+
+      // Weather
+      weather_search: () => {
+        speak(`Checking weather for ${userInput}`);
+        openWebsite(
+          `https://www.google.com/search?q=weather+${query}`
+        );
+      },
+
+      // News
+      news_search: () => {
+        speak(`Showing news about ${userInput}`);
+        openWebsite(
+          `https://news.google.com/search?q=${query}`
+        );
+      },
+    };
+
+    console.log(
+      "Available Commands:",
+      Object.keys(commands)
+    );
+
+    const action = commands[cleanType];
+
+    if (action) {
+      console.log(
+        "Executing Command:",
+        cleanType
+      );
+      action();
+    } else {
+      console.warn(
+        "Unknown Command:",
+        cleanType
+      );
+
+      if (response) {
+        speak(response);
+      } else {
+        speak(
+          "Sorry, I don't understand this command."
+        );
+      }
     }
   } catch (error) {
-    console.error(error);
+    console.error(
+      "handleCommand Error:",
+      error
+    );
+
     speak("Something went wrong");
   }
 };
+
 
   // =========================
   // Speech Recognition
