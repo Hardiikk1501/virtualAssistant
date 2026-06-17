@@ -67,7 +67,7 @@ if (
   return {
     type: "general",
     userInput: cleanCommand,
-    response: `Hello ${userName}! How can I help you today?`,
+    response: `Hello ${userName}! How can I help you today ?`,
   };
 }
 
