@@ -574,7 +574,7 @@ const handleCommand = (data) => {
        <div className="mt-4 w-full">
   {/* <div className="bg-white/10 border border-cyan-400/30 rounded-xl p-3 min-h-80"> */}
     <p className="text-shadow-amber-950 text-center text-sm shadow-2xl font-semibold animate-bounce">
-      {assistantMessage}?
+      {assistantMessage}
     </p>
   {/* </div> */}
 </div>
