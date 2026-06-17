@@ -67,27 +67,21 @@ export const askToAssistant = async (req, res) => {
     }
 
     // Find logged in user
-    const user = await User.findById(req.userId).select(
-      "name assistantName"
-    );
-    // user.history.push(command)
-user.save();
+    const user = await User.findById(req.userId);
 
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
-    }
+if (!user) {
+  return res.status(404).json({
+    success: false,
+    message: "User not found",
+  });
+}
+    
      // IMPORTANT FIX
     if (!user.history) {
       user.history = [];
     }
 
-    // Save user command
-    user.history.push({
-       
-    });
+
 
     const userName = user.name || "User";
     const assistantName = user.assistantName || "Assistant";
@@ -120,10 +114,7 @@ user.save();
 
       // Date & Time
       case "get-date":
-      case "date_time_info":
-        responseText = `Today's date is ${moment().format(
-          "DD MMMM YYYY"
-        )}`;
+        responseText = `Today's date is ${moment().format("MMMM Do YYYY")}`;
         break;
 
       case "get-time":
@@ -131,7 +122,7 @@ user.save();
           "hh:mm A"
         )}`;
         break;
-
+ 
       case "get-day":
         responseText = `Today is ${moment().format("dddd")}`;
         break;
@@ -153,16 +144,31 @@ user.save();
       case "wikipedia_search":
       case "youtube_search":
       case "youtube_play":
-      case "whatsapp_open":
-      case "facebook_open":
-      case "twitter_open":
-      case "linkedin_open":
-      case "instagram_open":
-      case "github_open":
-      case "stackoverflow_open":
-      case "gmail_open":
-      case "youtube_open":
-      case "snapchat_open":
+      case "open_whatsapp":
+      case "open_instagram":
+      case "open_github":
+      case "open_youtube":
+      case "open_gmail":
+      case "open_amazon":
+      case "open_flipkart":
+        case"open_netflix":
+      case "open_facebook":
+      case "open_twitter":
+      case "open_linkedin":
+      case "open_spotify":
+      case "open_snapchat":
+        responseText = response;
+        break;
+
+      // Weather
+      case "weather_search":
+        responseText = response;
+        break;
+
+      // News
+      case "news_search":
+        responseText = response;
+        break;  
       case "general":
       case "other":
         responseText = response;
@@ -175,12 +181,17 @@ user.save();
         break;
     }
       // Save assistant response
-    user.history.push({
-      role: "assistant",
-      text: response,
-    });
+      user.history.push({
+  role: "user",
+  text: cleanCommand,
+});
 
-    await user.save();
+user.history.push({
+  role: "assistant",
+  text: responseText,
+});
+
+await user.save();
 
     // Final Response
     return res.status(200).json({

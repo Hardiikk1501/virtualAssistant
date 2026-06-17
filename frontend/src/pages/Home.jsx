@@ -138,214 +138,9 @@ const speak = (text) => {
 
 //handle command  testing 
 
-// const handleCommand = (data) => {
-//   try {
-//     // Validate data
-//     if (!data || !data.type) {
-//       console.warn("Invalid command data:", data);
-//       speak("Invalid command received");
-//       return;
-//     }
-
-//     const {
-//       type,
-//       userInput = "",
-//       response = "",
-//     } = data;
-
-//     const cleanType = type.trim().toLowerCase();
-//     const query = encodeURIComponent(userInput);
-
-//     console.log("Command Type:", cleanType);
-//     console.log("Command Input:", userInput);
-//     console.log("Command Response:", response);
-
-//    const openUrl = (url) => {
-//   const newWindow = window.open(
-//     url,
-//     "_blank"
-//   );
-
-//   if (!newWindow) {
-//     console.log(
-//       "Popup blocked by browser"
-//     );
-
-//     speak(
-//       "Please allow popups for this website"
-//     );
-//   }
-// };
-
-//     const commands = {
-//       // General Conversation
-//       general: () => {
-//   speak(response);
-// },
-
-// conversation: () => {
-//   speak(response);
-// },
-
-// general_conversation: () => {
-//   speak(response);
-// },
-
-//       // Google Search
-//       google_search: () => {
-//         speak(`Searching ${userInput} on Google`);
-//         window.location.href=
-//           `https://www.google.com/search?q=${query}`
-      
-//       },
-
-//       // YouTube Search
-//    youtube_search: () => {
-//   const url =
-//     `https://www.youtube.com/results?search_query=${query}`;
-
-//   console.log("Opening:", url);
-
-//   const win = window.location.href=url;
-
-
-//   console.log("Window:", win);
-
-//   speak(
-//     `Searching ${userInput} on YouTube`
-//   );
-// },
-//      open_whatsapp: () => {
-//   const url =
-//     'https://web.whatsapp.com/';
-
-//   console.log("Opening:", url);
-
-//   const win = window.location.href=url;
-
-
-//   console.log("Window:", win);
-
-//   speak(
-//     `opening ${userInput}`
-//   );
-// },
-//       // Open Website
-//       open_website: () => {
-//         let website = userInput
-//           .replace(/^open\s+/i, "")
-//           .trim()
-//           .toLowerCase();
-
-//         website = website.replace(/\s+/g, "");
-
-//         if (
-//           !website.startsWith("http") &&
-//           !website.includes(".")
-//         ) {
-//           website += ".com";
-//         }
-
-//         const url = website.startsWith("http")
-//           ? website
-//           : `https://${website}`;
-
-//         speak(`Opening ${website}`);
-//         window.location.href(url);
-//       },
-
-//       // Social Apps
-      
-//   open_instagram : () => {
-//     speak("Opening Instagram");
-//     window.location.href("https://www.instagram.com/");
-//   },
-
-//   instagram_open:() => {
-//     speak("Opening Instagram");
-//     window.location.href("https://www.instagram.com/");
-//   },
-
-//   open_github :() => {
-//     speak("Opening GitHub");
-//     window.location.href("https://github.com/");
-//   },
-
-//   github_open :() => {
-//     speak("Opening GitHub");
-//     window.location.href("https://github.com/");
-//   },
-
-//       // // Music
-//       play_music:() => {
-//         speak(`Playing ${userInput}`);
-//         window.location.href(
-//           `https://open.spotify.com/search/${query}`
-//         );
-//       },
-
-//       // Maps
-//       open_maps:() => {
-//         speak(`Opening maps for ${userInput}`);
-//         window.location.href(
-//           `https://www.google.com/maps/search/${query}`
-//         );
-//       },
-
-//       // Weather
-//       weather_search:() => {
-//         speak(`Checking weather for ${userInput}`);
-//         window.location.href(
-//           `https://www.google.com/search?q=weather+${query}`
-//         );
-//       },
-
-//       // News
-//       news_search:() => {
-//         speak(`Showing news about ${userInput}`);
-//         window.location.href(
-//           `https://news.google.com/search?q=${query}`
-//         );
-//       }
-//     };
-    
-
-//     const action = commands[cleanType];
-
-//     if (action) {
-//       console.log(
-//         "Executing Command:",
-//         cleanType
-//       );
-//       action();
-//     } else {
-//       console.warn(
-//         "Unknown command:",
-//         cleanType
-//       );
-
-//       if (response) {
-//         speak(response);
-//       } else {
-//         speak(
-//           "Sorry, I don't understand this command."
-//         );
-//       }
-//     }
-  
-//   } catch (error) {
-//     console.error(
-//       "handleCommand Error:",
-//       error
-//     );
-
-//     speak("Something went wrong");
-//   }
-// };
-
 const handleCommand = (data) => {
   try {
-    if (!data || !data.type) {
+    if (!data?.type) {
       console.warn("Invalid command data:", data);
       speak("Invalid command received");
       return;
@@ -364,65 +159,108 @@ const handleCommand = (data) => {
     console.log("Command Input:", userInput);
     console.log("Command Response:", response);
 
-    // Open URL Helper
-    const openWebsite = (url) => {
-      console.log("Opening URL:", url);
-      window.location.href = url;
+    const navigateTo = (url, message) => {
+      if (message) speak(message);
+
+      console.log("Navigating to:", url);
+
+      setTimeout(() => {
+        window.location.href = url;
+      }, 1000);
     };
 
     const commands = {
-      // General Conversation
+      // Conversation
       general: () => speak(response),
+
       conversation: () => speak(response),
+
       general_conversation: () => speak(response),
 
-      // Google Search
+      // Google
       google_search: () => {
-        speak(`Searching ${userInput} on Google`);
-        openWebsite(
-          `https://www.google.com/search?q=${query}`
+        navigateTo(
+          `https://www.google.com/search?q=${query}`,
+          `Searching ${userInput} on Google`
         );
       },
 
-      // YouTube Search
+      // YouTube
       youtube_search: () => {
-        speak(`Searching ${userInput} on YouTube`);
-        openWebsite(
-          `https://www.youtube.com/results?search_query=${query}`
+        navigateTo(
+          `https://www.youtube.com/results?search_query=${query}`,
+          `Searching ${userInput} on YouTube`
         );
       },
 
       // WhatsApp
-      whatsapp_open: () => {
-        speak("Opening WhatsApp");
-        openWebsite("https://web.whatsapp.com/");
-      },
-
       open_whatsapp: () => {
-        speak("Opening WhatsApp");
-        openWebsite("https://web.whatsapp.com/");
+        navigateTo(
+          "https://web.whatsapp.com/",
+          "Opening WhatsApp"
+        );
       },
 
       // Instagram
-      instagram_open: () => {
-        speak("Opening Instagram");
-        openWebsite("https://www.instagram.com/");
+      open_instagram: () => {
+        navigateTo(
+          "https://www.instagram.com/",
+          "Opening Instagram"
+        );
       },
 
-      open_instagram: () => {
-        speak("Opening Instagram");
-        openWebsite("https://www.instagram.com/");
+      instagram_open: () => {
+        navigateTo(
+          "https://www.instagram.com/",
+          "Opening Instagram"
+        );
       },
 
       // GitHub
-      github_open: () => {
-        speak("Opening GitHub");
-        openWebsite("https://github.com/");
+      open_github: () => {
+        navigateTo(
+          "https://github.com/",
+          "Opening GitHub"
+        );
       },
 
-      open_github: () => {
-        speak("Opening GitHub");
-        openWebsite("https://github.com/");
+      github_open: () => {
+        navigateTo(
+          "https://github.com/",
+          "Opening GitHub"
+        );
+      },
+
+      // Spotify
+      play_music: () => {
+        navigateTo(
+          `https://open.spotify.com/search/${query}`,
+          `Playing ${userInput}`
+        );
+      },
+
+      // Maps
+      open_maps: () => {
+        navigateTo(
+          `https://www.google.com/maps/search/${query}`,
+          `Opening maps for ${userInput}`
+        );
+      },
+
+      // Weather
+      weather_search: () => {
+        navigateTo(
+          `https://www.google.com/search?q=weather+${query}`,
+          `Checking weather for ${userInput}`
+        );
+      },
+
+      // News
+      news_search: () => {
+        navigateTo(
+          `https://news.google.com/search?q=${query}`,
+          `Showing news about ${userInput}`
+        );
       },
 
       // Open Website
@@ -445,47 +283,12 @@ const handleCommand = (data) => {
           ? website
           : `https://${website}`;
 
-        speak(`Opening ${website}`);
-        openWebsite(url);
-      },
-
-      // Spotify Music
-      play_music: () => {
-        speak(`Playing ${userInput}`);
-        openWebsite(
-          `https://open.spotify.com/search/${query}`
-        );
-      },
-
-      // Maps
-      open_maps: () => {
-        speak(`Opening maps for ${userInput}`);
-        openWebsite(
-          `https://www.google.com/maps/search/${query}`
-        );
-      },
-
-      // Weather
-      weather_search: () => {
-        speak(`Checking weather for ${userInput}`);
-        openWebsite(
-          `https://www.google.com/search?q=weather+${query}`
-        );
-      },
-
-      // News
-      news_search: () => {
-        speak(`Showing news about ${userInput}`);
-        openWebsite(
-          `https://news.google.com/search?q=${query}`
+        navigateTo(
+          url,
+          `Opening ${website}`
         );
       },
     };
-
-    console.log(
-      "Available Commands:",
-      Object.keys(commands)
-    );
 
     const action = commands[cleanType];
 
@@ -494,10 +297,11 @@ const handleCommand = (data) => {
         "Executing Command:",
         cleanType
       );
+
       action();
     } else {
       console.warn(
-        "Unknown Command:",
+        "Unknown command:",
         cleanType
       );
 
