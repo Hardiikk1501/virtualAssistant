@@ -26,14 +26,14 @@ function Home() {
  const [assistantMessage, setAssistantMessage] =
   useState("Say my name to start talking...");
   const navigate = useNavigate();
-  console.log("User Data:", userData);
+  
   useEffect(() => {
   if (userData === null) {
     navigate("/signup");
   }
 }, [userData, navigate]);
   console.log("User Data:", userData);
-  
+
   // Speech Recognition Ref
   const recognitionRef = useRef(null);
   const isListeningRef =
