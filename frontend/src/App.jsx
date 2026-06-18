@@ -19,7 +19,7 @@ function App() {
       <Route path="/customize" element={userData ?<Customize />:<Navigate to={"/signup"} />} />
       <Route path="/customize2" element={userData ?<Customize2 />:<Navigate to={"/signup"} />} />
 
-      <Route path="/signup" element={ !userData?<SignUp /> : <Navigate to={"/customize"} />} />
+      <Route path="/signup" element={ !userData?<SignUp /> : <Navigate to={"/signin"} />} />
       <Route path="/signin" element={ !userData ? <SignIn /> : <Navigate to={"/customize"} />} />
     </Routes>
   )
