@@ -33,9 +33,6 @@ function Customize() {
       setSelectedImage('input');
     }
   };
-console.log("selectedImage:", selectedImage);
-console.log("backendImage:", backendImage);
-
   return (
     <div className="w-full min-h-screen bg-linear-to-t from-black to-[#050160] flex flex-wrap items-center justify-center gap-6 px-4 py-8">
       

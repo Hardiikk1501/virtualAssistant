@@ -19,6 +19,8 @@ function Customize2() {
     userData?.assistantName || ''
   );
 console.log("userData:", userData);
+console.log("backendImage:", backendImage);
+console.log("selectedImage:", selectedImage);
   const handleUpdateAssistant = async (req, res) => {
     try {
       let formData = new FormData();
