@@ -33,7 +33,6 @@ function Customize() {
       setSelectedImage('input');
     }
   };
-  console.log("userData:", userData);
 console.log("selectedImage:", selectedImage);
 console.log("backendImage:", backendImage);
 
