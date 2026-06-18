@@ -18,9 +18,7 @@ function Customize2() {
   const [assistantName, setAssistantName] = useState(
     userData?.assistantName || ''
   );
-console.log("userData:", userData);
-console.log("backendImage:", backendImage);
-console.log("selectedImage:", selectedImage);
+
   const handleUpdateAssistant = async (req, res) => {
     try {
       let formData = new FormData();
@@ -49,7 +47,6 @@ console.log("selectedImage:", selectedImage);
       console.log(result.data);
 
       setUserData(result.data);
-      
 
       navigate('/'); // optional navigation after success
     } catch (error) {
