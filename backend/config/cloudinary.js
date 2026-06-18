@@ -14,10 +14,15 @@ cloudinary.config({
       folder:"AI_Assistant", 
     });
     console.log(uploadResult.secure_url);
+     if(fs.existsSync(file)){
+      fs.unlinkSync(file);
+    }
+    
     return uploadResult.secure_url;
-    fs.unlinkSync(file);  // Delete the local file after upload
   }catch (error) {
-     fs.unlinkSync(file);  // Ensure the local file is deleted even if upload fails
+     if(file && fs.existsSync(file)) {
+      fs.unlinkSync(file);
+    }
     console.error('Image upload error:', error);
   }
 }

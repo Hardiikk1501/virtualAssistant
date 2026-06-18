@@ -25,7 +25,10 @@ export const updateAssistant = async (req, res) => {
             let assistantImage;
 
      if(req.file){
-        assistantImage =  await  uploadCloudinary(req.file.path);
+           console.log("File:", req.file);
+          console.log("Path:", req.file.path);
+         console.log("req.file =", req.file);
+          assistantImage =  await  uploadCloudinary(req.file.path);
      }else{
         assistantImage = imageUrl; // Use existing image URL if no new file is uploaded
      }
@@ -34,13 +37,22 @@ export const updateAssistant = async (req, res) => {
             assistantImage
         }, { new: true }).select('-password'); // Exclude password from the response
 
+           console.log(req.body);
+           console.log(imageUrl);
         return res.json(user);
-        console.log(req.body);
-console.log(imageUrl);
-    }catch(error){
-        console.error('Error updating assistant:', error);
-        res.status(500).json({ message: 'Error updating assistant' });
+     
     }
+    catch(error){
+      console.error("updateAssistant error:", error);
+
+      return
+        res.status(500).json({
+          success: false,
+          message:error.message,
+        stack: error.stack,
+      });
+    }
+
 };
 
 
