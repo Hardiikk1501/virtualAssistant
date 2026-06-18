@@ -7,7 +7,7 @@ import axios from 'axios';
 
 function SignUp() {
   const navigate = useNavigate();
-  const { serverUrl, userData, setUserData } = React.useContext(UserDataContext);
+  const { serverUrl } = React.useContext(UserDataContext);
 
   const [showPassword, setShowPassword] = React.useState(false);
   const [name, setName] = React.useState('');
@@ -46,7 +46,7 @@ function SignUp() {
           withCredentials: true,
         }
       );
-        navigate('/signin');
+        
       console.log('Sign up successful:', response.data);
     
       // Clear Form
@@ -54,8 +54,9 @@ function SignUp() {
       setEmail('');
       setPassword('');
 
-      // Set user data
-      setUserData(response.data);
+      //navigate
+      navigate('/signin');
+
 
     } catch (err) {
       console.error(
