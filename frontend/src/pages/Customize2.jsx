@@ -18,7 +18,7 @@ function Customize2() {
   const [assistantName, setAssistantName] = useState(
     userData?.assistantName || ''
   );
-
+console.log("userData:", userData);
   const handleUpdateAssistant = async (req, res) => {
     try {
       let formData = new FormData();
@@ -47,6 +47,7 @@ function Customize2() {
       console.log(result.data);
 
       setUserData(result.data);
+      
 
       navigate('/'); // optional navigation after success
     } catch (error) {
