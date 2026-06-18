@@ -46,11 +46,7 @@ function SignUp() {
           withCredentials: true,
         }
       );
-       if(response.data.success){
-        alert('Sign up successful! Please sign in.');
         navigate('/signin');
-       }
-
       console.log('Sign up successful:', response.data);
     
       // Clear Form
