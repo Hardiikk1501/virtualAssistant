@@ -55,6 +55,7 @@ const isSpeakingRef =
     );
 
     localStorage.removeItem("token");
+    localStorage.removeItem("userData");
 
     window.speechSynthesis.cancel();
 
