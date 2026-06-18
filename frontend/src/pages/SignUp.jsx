@@ -46,9 +46,13 @@ function SignUp() {
           withCredentials: true,
         }
       );
+       if(response.data.success){
+        alert('Sign up successful! Please sign in.');
+        navigate('/signin');
+       }
 
       console.log('Sign up successful:', response.data);
-
+    
       // Clear Form
       setName('');
       setEmail('');
@@ -56,9 +60,6 @@ function SignUp() {
 
       // Set user data
       setUserData(response.data);
-
-      // Redirect
-      navigate('/signin');
 
     } catch (err) {
       console.error(
