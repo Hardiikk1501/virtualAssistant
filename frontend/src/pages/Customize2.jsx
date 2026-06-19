@@ -18,7 +18,7 @@ function Customize2() {
   const [assistantName, setAssistantName] = useState(
     userData?.assistantName || ''
   );
-const[loding,setLoading]=useState(false)
+const[loading,setLoading]=useState(false)
 
   const handleUpdateAssistant = async (req, res) => {
     try {
