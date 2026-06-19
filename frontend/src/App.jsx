@@ -13,9 +13,6 @@ function App() {
     const { userData, setUserData } = useContext(UserDataContext)
   return (
     <Routes>
-       {/* <Route path="/" element={( userData ?.assistantImage && 
-                            userData.assistantName )?<Home /> : <Navigate to={"/customize"} />} />
-    */}
       <Route path="/" element={<Home />} />
       <Route path="/customize" element={userData ?<Customize />:<Navigate to={"/signup"} />} />
       <Route path="/customize2" element={userData ?<Customize2 />:<Navigate to={"/signin"} />} />
