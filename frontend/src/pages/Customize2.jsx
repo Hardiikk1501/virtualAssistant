@@ -86,19 +86,6 @@ const[loading,setLoading]=useState(false)
         onChange={(e) => setAssistantName(e.target.value)}
       />
 
-      {/* Button */}
-      {/* <button
-        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-200 ${
-          assistantName.trim() === ''
-            ? 'opacity-50 cursor-not-allowed'
-            : 'cursor-pointer'
-        }`}
-        disabled={assistantName.trim() === ''}
-        onClick={handleCreateAssistant}
-      >
-        Finally, Create Your Assistant
-      </button>
-    </div> */}
       <button
         className={`font-bold py-2 px-6 rounded-2xl transition-all duration-200 text-white ${
           loading
